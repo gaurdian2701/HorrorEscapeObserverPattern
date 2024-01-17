@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -26,7 +27,24 @@ public class PlayerController
         this.playerScriptableObject = playerScriptableObject;
         this.playerScriptableObject.KeysEquipped = 0;
 
+        LightSwitchView.LightSwitched += HandleLightSwitchToggle;
+
         playerState = PlayerState.InDark;
+    }
+
+    private void HandleLightSwitchToggle()
+    {
+
+        if (playerState == PlayerState.InDark)
+        {
+            playerState = PlayerState.None;
+            Debug.Log("Player Sanity decay reduced");
+        }
+        else
+        {
+            playerState = PlayerState.InDark;
+            Debug.Log("Player Sanity Decay Increased");
+        }
     }
 
     public void Interact() => IsInteracted = Input.GetKeyDown(KeyCode.E) ? true : (Input.GetKeyUp(KeyCode.E) ? false : IsInteracted);
