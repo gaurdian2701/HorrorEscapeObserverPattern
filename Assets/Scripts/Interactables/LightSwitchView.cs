@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -6,11 +7,25 @@ public class LightSwitchView : MonoBehaviour, IInteractable
     [SerializeField] private List<Light> lightsources = new List<Light>();
     private SwitchState currentState;
 
+    public delegate void LightSwitchDelegate();
+    public LightSwitchDelegate LightSwitched;
     private void Start() => currentState = SwitchState.Off;
+
+    private void Awake()
+    {
+        LightSwitched = OnLightSwitched;
+    }
+
+    private void OnLightSwitched()
+    {
+        toggleLights();
+        GameService.Instance.GetSoundView().PlaySoundEffects(SoundType.SwitchSound);
+        GameService.Instance.GetInstructionView().HideInstruction();
+    }
 
     public void Interact()
     {
-        //Todo - Implement Interaction
+        LightSwitched.Invoke();
     }
     private void toggleLights()
     {
