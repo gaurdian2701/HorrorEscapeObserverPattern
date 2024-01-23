@@ -11,9 +11,14 @@ public class LightSwitchView : MonoBehaviour, IInteractable
     public static LightSwitchDelegate LightSwitched;
     private void Start() => currentState = SwitchState.Off;
 
-    private void Awake()
+    private void OnEnable()
     {
-        LightSwitched = OnLightSwitched;
+        LightSwitched += OnLightSwitched;
+    }
+
+    private void OnDisable()
+    {
+        LightSwitched -= OnLightSwitched;
     }
 
     private void OnLightSwitched()
@@ -26,7 +31,7 @@ public class LightSwitchView : MonoBehaviour, IInteractable
 
     public void Interact()
     {
-        LightSwitched.Invoke();
+        LightSwitched?.Invoke(); //? - is null check
     }
     private void toggleLights()
     {

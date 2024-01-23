@@ -32,6 +32,12 @@ public class PlayerController
         playerState = PlayerState.InDark;
     }
 
+    ~PlayerController()
+    {
+        LightSwitchView.LightSwitched -= HandleLightSwitchToggle;
+
+    }
+
     private void HandleLightSwitchToggle()
     {
 
