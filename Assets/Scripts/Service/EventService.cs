@@ -24,6 +24,8 @@ public class EventService
 
     public EventController OnSkullDropEvent { get; private set; }
 
+    public EventController<int> OnPotionDrunkEvent { get; private set; }
+
     public EventService()
     {
         OnLightSwitchToggled = new EventController();
@@ -35,5 +37,7 @@ public class EventService
 
         OnRatRushEvent = new EventController();
         OnSkullDropEvent = new EventController();
+
+        OnPotionDrunkEvent = new EventController<int>();
     }
 }
